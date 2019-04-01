@@ -1,6 +1,6 @@
 # Don't track content of these folders
 Food-11/
-
+__pycache__/
 
 
 # Compiled source #
@@ -11,6 +11,7 @@ Food-11/
 *.exe
 *.o
 *.so
+*.pyc
 
 
 # Packages #

@@ -19,17 +19,21 @@ if __name__ == '__main__':
         print('Init model\n')
         model = build_custom_CNN(len(classes))
 
+    filepath = "check_point.h5"
+    checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
+    callbacks_list = [checkpoint]
     model.fit(
         X_tr,
         Y_tr,
         validation_data=(X_val, Y_val),
         epochs = 200,
         batch_size = 100,
-        verbose=1
+        verbose=1,
+        callbacks=callbacks_list
     )
     scores = model.evaluate(
         X_test,
         Y_test,
         verbose=1
     )
-    model.save('check_point.h5')
+    # model.save('check_point.h5')

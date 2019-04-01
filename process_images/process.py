@@ -51,8 +51,8 @@ def load_image(root, min_side=32):
 if __name__ == "__main__":
     # Classes init
     classes, indexes = load_class('../class_description.txt')
-    test_path = '../Food-11/test/'
+    test_path = '../Food-11/training/'
     imgs, img_classes = load_image(test_path)
     print('Size: {}'.format(np.shape(imgs[0])))
     print(img_classes.shape)
-    # pprint(imgs[0])
+    pprint(imgs[0])

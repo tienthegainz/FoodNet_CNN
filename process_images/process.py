@@ -22,8 +22,8 @@ def pprint(A):
             print(']')
         print(u'\u2514'+u'\u2500'*w+u'\u2518')
 
-def load_class():
-    with open('../class_description.txt', 'r') as foods:
+def load_class(path):
+    with open(path, 'r') as foods:
         classes = [food.split()[1] for food in foods]
         print('Name: {}\n'.format(classes))
         index = np.arange(len(classes))
@@ -50,7 +50,7 @@ def load_image(root, min_side=32):
 
 if __name__ == "__main__":
     # Classes init
-    classes, indexes = load_class()
+    classes, indexes = load_class('../class_description.txt')
     test_path = '../Food-11/test/'
     imgs, img_classes = load_image(test_path)
     print('Size: {}'.format(np.shape(imgs[0])))

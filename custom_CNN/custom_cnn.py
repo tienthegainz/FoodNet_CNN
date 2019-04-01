@@ -4,6 +4,10 @@ from keras.layers import Dense
 from keras.layers import Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D, AveragePooling2D
 
+"""
+This is my custom CNN model which contains 2 Conv2D, 1 AvgPool, 1 MaxPool, 1 Flatten and 1 FCL sigmoid
+"""
+
 def build_custom_CNN(n_classes):
     model = Sequential()
     model.add(

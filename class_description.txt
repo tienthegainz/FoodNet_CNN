@@ -1,0 +1,11 @@
+0 bread
+1 cheese
+2 cake
+3 egg
+4 fries
+5 beef
+6 spagetti
+7 rice
+8 seafood
+9 soup
+10 fruit

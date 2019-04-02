@@ -30,7 +30,7 @@ def load_class(path):
         print('Index: {}\n'.format(index))
     return classes, index
 
-def load_image(root, min_side=32):
+def load_image(root, min_side=200):
     print('Loading the {} dataset\n'.format(root))
     images = []
     classes = []
@@ -40,12 +40,12 @@ def load_image(root, min_side=32):
     for img in listdir(root):
         # resize into 32x32
         im = imresize(imread(root + img), (min_side, min_side))
-        arr = np.array(im)
+        arr = np.array(im)/255.00
         images.append(arr)
         classes.append(img.split('_')[0])
     print('Finish loading the {} dataset\n'.format(root))
 
-    return np.array(images)/255.0, np_utils.to_categorical(np.array(classes))
+    return np.array(images), np_utils.to_categorical(np.array(classes))
 
 
 if __name__ == "__main__":
@@ -53,6 +53,7 @@ if __name__ == "__main__":
     classes, indexes = load_class('../class_description.txt')
     test_path = '../Food-11/training/'
     imgs, img_classes = load_image(test_path)
+    imgs = imgs
     print('Size: {}'.format(np.shape(imgs[0])))
     print(img_classes.shape)
-    pprint(imgs[0])
+    # pprint(imgs[0])

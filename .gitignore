@@ -12,6 +12,9 @@ __pycache__/
 *.o
 *.so
 *.pyc
+*.h5
+*.log
+*.hdf5
 
 
 # Packages #

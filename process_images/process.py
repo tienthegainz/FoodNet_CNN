@@ -38,22 +38,22 @@ def load_image(root, min_side=200):
     imgs = sorted(os.listdir(root)) # get items in 'root path'
 
     for img in listdir(root):
-        # resize into 32x32
+        # resize into 200, 200
         im = imresize(imread(root + img), (min_side, min_side))
         arr = np.array(im)/255.00
         images.append(arr)
         classes.append(img.split('_')[0])
     print('Finish loading the {} dataset\n'.format(root))
 
-    return np.array(images), np_utils.to_categorical(np.array(classes))
+    return np.array(images, dtype=np.float16), np_utils.to_categorical(np.array(classes), 11)
 
 
 if __name__ == "__main__":
     # Classes init
-    classes, indexes = load_class('../class_description.txt')
-    test_path = '../Food-11/training/'
+    # classes, indexes = load_class('../class_description.txt')
+    test_path = '../Food-11/evaluation/'
     imgs, img_classes = load_image(test_path)
     imgs = imgs
-    print('Size: {}'.format(np.shape(imgs[0])))
+    print('Size: {}'.format(np.shape(imgs)))
     print(img_classes.shape)
     # pprint(imgs[0])

@@ -13,22 +13,24 @@ if __name__ == '__main__':
     train_path = 'Food-11/training/'
     train_gen = DataGenerator(data_path=train_path)
     val_path = 'Food-11/validation/'
-    val_gen = DataGenerator(data_path=val_path, batch_size=60)
+    X_val, Y_val = load_image(val_path)
+    # val_gen = DataGenerator(data_path=val_path)
     classes, indexes = load_class('class_description.txt')
     """Continue to train"""
     print('Load model\n')
-    model = load_model('train_data/inception_v3.hdf5')
-    model.compile(optimizer=Adam, loss='categorical_crossentropy', metrics=['accuracy'])
+    model = load_model('train_data/inception_v3_adam.02-1.96.hdf5')
+    #opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
+    #model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     """New model"""
     # print('Init model\n')
     # model = build_inception_v3(len(indexes))
 
-    checkpointer = ModelCheckpoint(filepath='train_data/inception_v3.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
+    checkpointer = ModelCheckpoint(filepath='train_data/inception_v3_adam.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
     csv_logger = CSVLogger('train_data/inception_v3.log')
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=5, min_lr=0.001)
 
     """Fit models by generator"""
     model.fit_generator(generator=train_gen,
-                        validation_data=val_gen,
+                        validation_data=(X_val, Y_val),
                         callbacks=[csv_logger, checkpointer, reduce_lr],
                         epochs=10)

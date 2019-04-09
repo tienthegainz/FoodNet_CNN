@@ -11,7 +11,7 @@ from keras.utils import np_utils
 class DataGenerator(Sequence):
 
     def __init__(self, data_path, n_classes = 11,
-                shuffle=True, batch_size=200):
+                shuffle=True, batch_size=100):
         'Initialization'
         self.data_path = data_path
         self.n_classes = n_classes

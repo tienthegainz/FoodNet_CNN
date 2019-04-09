@@ -7,14 +7,15 @@ from keras.optimizers import Adam
 import h5py
 from pathlib import Path
 from keras.models import load_model
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     # Init generator
     train_path = 'Food-11/training/'
     train_gen = DataGenerator(data_path=train_path)
     val_path = 'Food-11/validation/'
-    X_val, Y_val = load_image(val_path)
-    # val_gen = DataGenerator(data_path=val_path)
+    # X_val, Y_val = load_image(val_path)
+    val_gen = DataGenerator(data_path=val_path)
     classes, indexes = load_class('class_description.txt')
     """Continue to train"""
     print('Load model\n')
@@ -30,7 +31,25 @@ if __name__ == '__main__':
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=5, min_lr=0.001)
 
     """Fit models by generator"""
-    model.fit_generator(generator=train_gen,
-                        validation_data=(X_val, Y_val),
+    history = model.fit_generator(generator=train_gen,
+                        validation_data=val_gen,
                         callbacks=[csv_logger, checkpointer, reduce_lr],
                         epochs=10)
+    """Plot training history"""
+    # Plot training & validation accuracy values
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('history/Accuracy.png')
+
+# Plot training & validation loss values
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('history/Loss.png')

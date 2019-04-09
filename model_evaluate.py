@@ -4,7 +4,7 @@ import csv
 
 test_path = 'Food-11/evaluation/'
 X_test, Y_test = load_image(test_path)
-model = load_model('train_data/inception_v3_adam.02-2.06.hdf5')
+model = load_model('train_data/inception_v3_adam.02-2.23.hdf5')
 opt = 'Adam'
 epoch = 2
 # evaluate

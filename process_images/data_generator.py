@@ -29,6 +29,7 @@ class DataGenerator(Sequence):
         batch_x = self.x[idx * self.batch_size:(idx + 1) * self.batch_size]
         batch_y = self.y[idx * self.batch_size:(idx + 1) * self.batch_size]
         """Data has shape of 200, 200, 3"""
+        # print('\nFile: ',batch_x)
         data = np.array([
                     imresize(imread(self.data_path+file_name), (200, 200))
                     for file_name in batch_x])/255.00

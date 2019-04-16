@@ -33,17 +33,17 @@ class DataGenerator(Sequence):
                         for file_name in batch_x])
         """Data has shape of 200, 200, 3"""
         augmentator1 = lambda x: augmentation_img(self.data_path+x, 1)
-        data_1 = list(map(augmentator1, batch_x))
+        data_1 = np.array(map(augmentator1, batch_x))
         data = np.concatenate(data, data_1)
         batch_y += batch_y
 
         augmentator4 = lambda x: augmentation_img(self.data_path+x, 4)
-        data_4 = list(map(augmentator4, batch_x))
+        data_4 = np.array(map(augmentator4, batch_x))
         data = np.concatenate(data, data_4)
         batch_y += batch_y
 
         augmentator5 = lambda x: augmentation_img(self.data_path+x, 5)
-        data_5 = list(map(augmentator5, batch_x))
+        data_5 = np.array(map(augmentator5, batch_x))
         data = np.concatenate(data, data_5)
         batch_y += batch_y
 

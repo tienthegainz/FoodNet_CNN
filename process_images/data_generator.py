@@ -10,13 +10,16 @@ from keras.utils import np_utils
 
 class DataGenerator(Sequence):
 
-    def __init__(self, data_path, n_classes = 11,
-                shuffle=True, batch_size=100):
+    def __init__(self, n_classes = 11,
+                shuffle=True, batch_size=100, data_path, aug_path = None):
         'Initialization'
         self.data_path = data_path
         self.n_classes = n_classes
         self.shuffle = shuffle
-        self.x = listdir(data_path)
+        if aug_path == None:
+            self.x = listdir(data_path)
+        else:
+            self.x = listdir(data_path)+listdir(aug_path)
         random.shuffle(self.x) # Shuffle data
         self.y = [img.split('_')[0] for img in self.x]
         self.batch_size=batch_size

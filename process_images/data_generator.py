@@ -31,17 +31,17 @@ class DataGenerator(Sequence):
         batch_y = self.y[idx * self.batch_size:(idx + 1) * self.batch_size]
         """Data has shape of 200, 200, 3"""
         augmentator1 = lambda x: augmentation_img(x, 1)
-        batch_x_1 = list(map(augmentator, batch_x))
+        batch_x_1 = list(map(augmentator1, batch_x))
         batch_x += batch_x_1
         batch_y += batch_y
 
         augmentator4 = lambda x: augmentation_img(x, 4)
-        batch_x_4 = list(map(augmentator, batch_x))
+        batch_x_4 = list(map(augmentator4, batch_x))
         batch_x += batch_x_4
         batch_y += batch_y
 
         augmentator5 = lambda x: augmentation_img(x, 5)
-        batch_x_2 = list(map(augmentator, batch_x))
+        batch_x_2 = list(map(augmentator5, batch_x))
         batch_x += batch_x_5
         batch_y += batch_y
 

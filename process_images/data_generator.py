@@ -4,15 +4,15 @@ from keras.utils import Sequence
 from os import listdir
 import random
 from keras.utils import np_utils
-from img_augmentation import *
+from .img_augmentation import *
 
 # Here, `x_set` is list of path to the images
 # and `y_set` are the associated classes.
 
 class DataGenerator(Sequence):
 
-    def __init__(self, n_classes = 11,
-                shuffle=True, batch_size=50, data_path):
+    def __init__(self, data_path, n_classes = 11,
+                shuffle=True, batch_size=50):
         'Initialization'
         self.data_path = data_path
         self.n_classes = n_classes
@@ -44,7 +44,7 @@ class DataGenerator(Sequence):
         batch_x_2 = list(map(augmentator, batch_x))
         batch_x += batch_x_5
         batch_y += batch_y
-        
+
         data = np.array([
                     imresize(imread(self.data_path+file_name), (200, 200))
                     for file_name in batch_x])/255.00

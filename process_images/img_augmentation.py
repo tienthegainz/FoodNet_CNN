@@ -83,25 +83,17 @@ def add_noise(img_path):
                     img[i][j][k] += random.randint(-50, 50)
     return img
 
-def augmentation_img(root, num = 1):
-    print('Augmentation the {} dataset\n'.format(root))
-    imgs = listdir(root)
-
-    for img in imgs:
-        class_im = img.split('_')[0]
-        if(int(class_im)==class_target):
-            img = root + img
-            # num = random.randint(1, 5) # use only 1 augumentation
-            if num == 1:
-                return shift_left(img)
-            elif num == 2:
-                return shift_right(img)
-            elif num == 3:
-                return shift_down(img)
-            elif num == 4:
-                return rotate(img)
-            elif num == 5:
-                return add_noise(img)
+def augmentation_img(img, num = 1):
+    if num == 1:
+        return shift_left(img)
+    elif num == 2:
+        return shift_right(img)
+    elif num == 3:
+        return shift_down(img)
+    elif num == 4:
+        return rotate(img)
+    elif num == 5:
+        return add_noise(img)
             # Image.fromarray(img).save(new_path)
 
 if __name__ == '__main__':

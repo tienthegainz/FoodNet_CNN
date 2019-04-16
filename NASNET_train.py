@@ -13,11 +13,11 @@ if __name__ == '__main__':
     # Init generator
     train_path = 'Food-11/training/'
     aug_path = 'Food-11/augmentation/'
-    train_gen = DataGenerator(data_path=train_path, aug_path=aug_path, batch_size=200)
+    train_gen = DataGenerator(data_path=train_path, batch_size=50)
     val_path = 'Food-11/validation/'
     # X_val, Y_val = load_image(val_path)
-    val_gen = DataGenerator(data_path=val_path, batch_size=100)
-    classes, indexes = load_class('class_description.txt')
+    val_gen = DataGenerator(data_path=val_path, batch_size=50)
+    # classes, indexes = load_class('class_description.txt')
     """Continue to train"""
     # print('Load model\n')
     # model = load_model('train_data/inception_v3_adam.02-1.96.hdf5')
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     #model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     """New model"""
     print('Init model\n')
-    model = build_nasnetlarge(len(indexes))
+    model = build_nasnetlarge(11)
 
     checkpointer = ModelCheckpoint(filepath='train_data/nasnet_sgd.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
     csv_logger = CSVLogger('train_data/inception_v3.log')

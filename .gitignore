@@ -1,6 +1,7 @@
 # Don't track content of these folders
 Food-11/
 Food_11_1/
+Food-11-subfolder/
 __pycache__/
 train_data/
 

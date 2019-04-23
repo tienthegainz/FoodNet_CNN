@@ -16,36 +16,42 @@ if __name__ == '__main__':
     VAL_PATH = 'Food-11-subfolder/Validation'
     train_datagen = ImageDataGenerator(
         rescale=1./255,
-        rotation_range = 20,
-        width_shift_range = 10,
-        height_shift_range = 10,
-        zoom_range=0.2,
-        horizontal_flip=True)
+        # rotation_range = 20,
+        # width_shift_range = 10,
+        # height_shift_range = 10,
+        # zoom_range=0.2,
+        # horizontal_flip=True,
+        validation_split=0.2
+        )
 
     train_gen = train_datagen.flow_from_directory(
         TRAIN_PATH,
         target_size=(200, 200),
         batch_size=100,
-        class_mode='categorical')
+        class_mode='categorical',
+        subset='training'
+        )
     val_gen = train_datagen.flow_from_directory(
-        VAL_PATH,
+        TRAIN_PATH,
         target_size=(200, 200),
         batch_size=100,
-        class_mode='categorical')
+        class_mode='categorical',
+        subset='validation'
+        )
     STEP_SIZE_TRAIN=train_gen.n//train_gen.batch_size
     STEP_SIZE_VALID=val_gen.n//val_gen.batch_size
     """Continue to train"""
     # print('Load model\n')
-    model = load_model('train_data/mobilenet_v2_SGD.02-4.29.hdf5')
-    #opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
-    #model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+    model = load_model('train_data/nasnet_adam_aug.05-2.69.hdf5')
+    opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     """New model"""
     # print('Init model\n')
     # model = build_nasnetlarge(11)
 
-    checkpointer = ModelCheckpoint(filepath='train_data/nasnet_sgd.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
+    checkpointer = ModelCheckpoint(filepath='train_data/nasnet_adam_aug.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
     csv_logger = CSVLogger('train_data/inception_v3.log')
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=3, min_lr=0.001)
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.4, patience=10, min_lr=0.001)
 
     """Fit models by generator"""
     history = model.fit_generator(generator=train_gen,
@@ -53,7 +59,7 @@ if __name__ == '__main__':
                         steps_per_epoch=STEP_SIZE_TRAIN,
                         validation_steps=STEP_SIZE_VALID,
                         callbacks=[csv_logger, checkpointer, reduce_lr],
-                        epochs=20)
+                        epochs=50)
     """Plot training history"""
     # Plot training & validation accuracy values
 plt.plot(history.history['acc'])

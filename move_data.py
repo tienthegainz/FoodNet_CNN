@@ -1,5 +1,6 @@
 import os
 import shutil
+from shutil import copyfile
 
 if __name__ == '__main__':
     TRAIN_PATH = 'Food-11/training/'
@@ -8,7 +9,18 @@ if __name__ == '__main__':
     TRAIN_DST = 'Food-11-subfolder/Training/'
     VAL_DST = 'Food-11-subfolder/Validation/'
     EVAL_DST = 'Food-11-subfolder/Evaluation/'
-    train_data = os.listdir('Food-11/training/')
+    train_data = os.listdir(TRAIN_DST)
+    val_data = os.listdir(VAL_DST)
+    try:
+        for folder in val_data:
+            data = os.listdir(VAL_DST+folder+'/')
+            for img in data:
+                src = VAL_DST+folder+'/'+img
+                dst = TRAIN_DST+folder+'/'+str(img.split('.')[0])+'_new.'+str(img.split('.')[1])
+                copyfile(src, dst)
+    except Exception as e:
+        print(e, '\n')
+    """train_data = os.listdir('Food-11/training/')
     val_data = os.listdir('Food-11/validation/')
     eval_data = os.listdir('Food-11/evaluation/')
     # Move train data
@@ -35,4 +47,4 @@ if __name__ == '__main__':
         if not os.path.isdir(dst):
             os.mkdir(dst)
         dst = dst + '/'
-        shutil.move(src, dst)
+        shutil.move(src, dst)"""

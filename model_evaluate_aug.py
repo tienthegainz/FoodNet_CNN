@@ -76,7 +76,7 @@ if __name__ == '__main__':
         class_mode='categorical')
     STEP_SIZE_EVAL=eval_gen.n//eval_gen.batch_size
 
-    model = load_model('train_data/NASNET_aug.02-1.07.hdf5')
+    model = load_model('train_data/NASNET_aug.18-0.92.hdf5')
 
     scores = model.evaluate_generator(generator=eval_gen,
                             steps=STEP_SIZE_EVAL
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     try:
         with open('result.csv', 'a', newline='') as csv_file:
             csv_writer = csv.DictWriter(csv_file, fieldnames=['Model', 'Opt', 'Epoch', 'Loss', 'Acc'])
-            csv_writer.writerow({'Model': 'NASNET', 'Opt': 'Adam', 'Epoch': 7, 'Loss': scores[0], 'Acc': scores[1]*100})
+            csv_writer.writerow({'Model': 'NASNET', 'Opt': 'SGD', 'Epoch': 18, 'Loss': scores[0], 'Acc': scores[1]*100})
     except Exception as e:
         print(e, '\n')
     finally:

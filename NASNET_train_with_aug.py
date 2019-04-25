@@ -29,14 +29,14 @@ if __name__ == '__main__':
     train_gen = train_datagen.flow_from_directory(
         TRAIN_PATH,
         target_size=(200, 200),
-        batch_size=100,
+        batch_size=200,
         class_mode='categorical',
         subset='training'
         )
     val_gen = train_datagen.flow_from_directory(
         TRAIN_PATH,
         target_size=(200, 200),
-        batch_size=100,
+        batch_size=200,
         class_mode='categorical',
         subset='validation'
         )

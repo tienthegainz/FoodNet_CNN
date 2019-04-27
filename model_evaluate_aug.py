@@ -21,7 +21,7 @@ if __name__ == '__main__':
         target_size=(200, 200),
         batch_size=100,
         class_mode='categorical')
-    STEP_SIZE_EVAL=eval_gen.n//eval_gen.batch_size
+    STEP_SIZE_EVAL=(eval_gen.n//eval_gen.batch_size)+1
 
     model = load_model('train_data/NASNET_aug.18-0.92.hdf5')
 

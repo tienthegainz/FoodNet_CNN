@@ -40,8 +40,8 @@ if __name__ == '__main__':
         class_mode='categorical',
         subset='validation'
         )
-    STEP_SIZE_TRAIN=train_gen.n//train_gen.batch_size
-    STEP_SIZE_VALID=val_gen.n//val_gen.batch_size
+    STEP_SIZE_TRAIN=(train_gen.n//train_gen.batch_size)+1
+    STEP_SIZE_VALID=(val_gen.n//val_gen.batch_size)+1
     """Continue to train"""
     print('Load model\n')
     model = load_model('train_data/NASNET_aug.11-0.92.hdf5')

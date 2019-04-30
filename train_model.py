@@ -1,6 +1,7 @@
 from custom_CNN.NASNET import build_nasnetlarge
 from custom_CNN.inception_v3  import build_inception_v3
 from custom_CNN.inception_resnet import build_inception_rasnet
+from custom_CNN.VGG16 import build_vgg16
 # from process_images.data_generator import DataGenerator
 from process_images.process import load_image
 from keras.preprocessing.image import ImageDataGenerator
@@ -44,17 +45,18 @@ if __name__ == '__main__':
     STEP_SIZE_VALID=(val_gen.n//val_gen.batch_size)+1
     """Continue to train"""
     print('Load model\n')
-    model = load_model('train_data/NASNET_aug.11-0.92.hdf5')
+    model = load_model('train_data/vgg16.25-0.92.hdf5')
     # opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
-    opt = SGD(lr=0.03, momentum=0.1, decay=1e-6, nesterov=True)
-    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy', 'top_k_categorical_accuracy'])
+    # opt = SGD(lr=0.03, momentum=0.1, decay=1e-6, nesterov=True)
+    # model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy', 'top_k_categorical_accuracy'])
     """New model"""
-    # print('Init model\n')
+    #print('Init model\n')
     # model = build_nasnetlarge(11)
     # model = build_inception_rasnet(11)
+    #model = build_vgg16(11)
 
-    checkpointer = ModelCheckpoint(filepath='train_data/NASNET_aug.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
-    csv_logger = CSVLogger('train_data/inception_resnet.log')
+    checkpointer = ModelCheckpoint(filepath='train_data/vgg16.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
+    csv_logger = CSVLogger('train_data/vgg16.log')
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=5, min_lr=0.001)
 
     """Fit models by generator"""
@@ -72,7 +74,7 @@ if __name__ == '__main__':
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc='upper left')
-    plt.savefig('history/NASNET_Accuracy.png')
+    plt.savefig('history/vgg16_acc.png')
 
     # Plot training & validation loss values
     plt.plot(history.history['loss'])
@@ -81,4 +83,4 @@ if __name__ == '__main__':
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc='upper left')
-    plt.savefig('history/NASNET_Loss.png')
+    plt.savefig('history/vgg16.png')

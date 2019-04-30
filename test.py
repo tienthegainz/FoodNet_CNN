@@ -75,12 +75,8 @@ def main():
         class_mode='categorical',
         shuffle=False
         )
-    model = load_model('train_data/NASNET_aug.11-0.92.hdf5')
-
-    """scores = model.evaluate_generator(generator=eval_gen,
-                            steps=STEP_SIZE_EVAL
-                            )
-    print('\nTest accuracy: %.2f%%' % (scores[1] * 100))"""
+    model = load_model('train_data/vgg16.17-0.89.hdf5')
+    STEP_SIZE_EVAL=(eval_gen.n//eval_gen.batch_size)+1
     ##############################################################################
     #Calculate top_1_acc, top_5_acc, plot confusion matrix, calculate accuracy of each class
     eval_gen.reset()
@@ -95,17 +91,32 @@ def main():
 
 
     ####    plot confusion matrix   ########################
-    plot_confusion_matrix(actual_class, predictions, classes=class_names,
+    plot_confusion_matrix(y_true, y_pred, classes=class_names,
                           cmap=plt.cm.cool)
-    plot_confusion_matrix(actual_class, predictions, classes=class_names,
+    plot_confusion_matrix(y_true, y_pred, classes=class_names,
                           normalize=True,
                           cmap=plt.cm.cool)
     plt.show()
-
-    ########################print accuracy of each class########################
+    ### Top 1 and top 5 ####
     from sklearn.metrics import accuracy_score
     print('Top 1 Accuracy: ', accuracy_score(y_true, y_pred))
-
+    top_5_preds = []
+    for predict in predictions:
+        dict_pred = {}
+        top_5 = []
+        for k, v in enumerate(predict):
+            dict_pred[k] = v
+            sorted_preds = sorted(dict_pred.items(), key=itemgetter(1), reverse=True)
+        for i in range(5):
+            top_5.append(sorted_preds[i][0])
+        top_5_preds.append(np.asarray(top_5))
+    top_5_preds = np.asarray(top_5_preds)
+    top_5_counter = 0
+    for i in range(len(predictions)):
+        guesses, actual = top_5_preds[i], y_true[i]
+        if actual in guesses:
+            top_5_counter += 1
+    print('Top-5 Accuracy: {0:.2f}%'.format((top_5_counter / len(predictions))*100))
 
 if __name__ == '__main__':
     main()

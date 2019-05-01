@@ -26,7 +26,7 @@ def build_vgg16(n_classes):
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     x = Dropout(.5)(x)
-    predictions = Dense(n_classes, init='glorot_uniform', W_regularizer=l2(.001), activation='softmax')(x)
+    predictions = Dense(n_classes, init='glorot_uniform', W_regularizer=l2(.0007), activation='softmax')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
 

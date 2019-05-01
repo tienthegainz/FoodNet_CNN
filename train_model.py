@@ -45,7 +45,7 @@ if __name__ == '__main__':
     STEP_SIZE_VALID=(val_gen.n//val_gen.batch_size)+1
     """Continue to train"""
     print('Load model\n')
-    model = load_model('train_data/vgg16.25-0.92.hdf5')
+    model = load_model('train_data/vgg16.17-0.89.hdf5')
     # opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
     # opt = SGD(lr=0.03, momentum=0.1, decay=1e-6, nesterov=True)
     # model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy', 'top_k_categorical_accuracy'])

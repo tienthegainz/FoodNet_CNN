@@ -79,9 +79,9 @@ As you can see in [train_model.py](train_model.py):
 ```
 checkpointer = ModelCheckpoint(filepath='train_data/inception_resnet.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
 ```
-The best results got save under `hdf5` file so you need those libs as well
-To test, just run [test.py](test.py)
-Since I use _Online Augumentation_ for training model,
+The best results got save under `hdf5` file so you need those libs as well.<br />
+To test, just run [test.py](test.py)<br />
+Since I use _Online Augumentation_ for training model,<br />
 **Always check for `eval_gen.reset()` if you don't want class output in weird order**
 ```
 python3 test.py

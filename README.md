@@ -101,8 +101,8 @@ Next run this command:
 ```
 curl -X POST -F image=@Food-11-subfolder/Evaluation/0/0_12.jpg http://127.0.0.1:5000/predict
 ```
-Here is the image:
-![alt text](picture_to_display/0_12.jpg)
+Here is the image:<br />
+![alt text](picture_to_display/0_12.jpg)<br />
 And you should see the following result:
 ```
 {

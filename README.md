@@ -54,11 +54,11 @@ def build_vgg16(n_classes):
 
     return model
 ```
-You can customize the way you one but if you are beginner, you should go for this setting since I have had changed several times to avoid high bias and high variance.\n
-My top accuracy is [NASNET](custom_CNN/NASNET.py) with **Top-1: 76.5% and Top-5: 98% and val_loss:0.93**\n
-and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss:0.89**\n
-Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:\n
-![alt text](https://imgur.com/ZvmZ3nV)
+You can customize the way you one but if you are beginner, you should go for this setting since I have had changed several times to avoid high bias and high variance.<br />
+My top accuracy is [NASNET](custom_CNN/NASNET.py) with **Top-1: 76.5% and Top-5: 98% and val_loss:0.93**<br />
+and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss:0.89**<br />
+Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />
+![alt text](NASNET_architecture.png)
 
 To train this model, **_uncomment_** this following and comment other networks:
 ```
@@ -81,11 +81,11 @@ Since I use _Online Augumentation_ for training model,
 ```
 python3 test.py
 ```
-Here is some result of confusion matrix:\n
+Here is some result of confusion matrix:<br />
 [NASNET](custom_CNN/NASNET.py):
-![alt text](NASNET_matrix.png)\n
+![alt text](NASNET_matrix.png)<br />
 
-[VGG16](custom_CNN/VGG16.py):\n
+[VGG16](custom_CNN/VGG16.py):<br />
 ![alt text](VGG16_matrix.png)
 
 
@@ -95,7 +95,7 @@ Run this in terminal:
 ```
 python3 food_api.py
 ```
-and wait until the sever is on in *http://localhost/5000*\n
+and wait until the sever is on in *http://localhost/5000*<br />
 
 Next run this command:
 ```

@@ -59,7 +59,7 @@ def build_vgg16(n_classes):
 
     return model
 ```
-You can customize the way you one but if you are beginner, you should go for this setting since I have had changed several times to avoid high bias and high variance.<br />
+You can customize the way you want but if you are beginner, you should go for this setting since I have had changed several times to avoid high bias and high variance.<br />
 My top accuracy is [NASNET](custom_CNN/NASNET.py) with **Top-1: 76.5% and Top-5: 98% and val_loss:0.93**<br />
 and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss:0.89**<br />
 Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />

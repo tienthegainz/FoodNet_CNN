@@ -58,7 +58,7 @@ You can customize the way you one but if you are beginner, you should go for thi
 My top accuracy is [NASNET](custom_CNN/NASNET.py) with **Top-1: 76.5% and Top-5: 98% and val_loss:0.93**<br />
 and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss:0.89**<br />
 Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />
-![alt text](NASNET_architecture.png)
+![alt text](picture_to_display/NASNET_architecture.png)
 
 To train this model, **_uncomment_** this following and comment other networks:
 ```
@@ -83,10 +83,10 @@ python3 test.py
 ```
 Here is some result of confusion matrix:<br />
 [NASNET](custom_CNN/NASNET.py):
-![alt text](NASNET_matrix.png)<br />
+![alt text](picture_to_display/NASNET_matrix.png)<br />
 
 [VGG16](custom_CNN/VGG16.py):<br />
-![alt text](VGG16_matrix.png)
+![alt text](picture_to_display/VGG16_matrix.png)
 
 
 ## Deployment
@@ -102,7 +102,7 @@ Next run this command:
 curl -X POST -F image=@Food-11-subfolder/Evaluation/0/0_12.jpg http://127.0.0.1:5000/predict
 ```
 Here is the image:
-![alt text](Food-11-subfolder/Evaluation/0/0_12.jpg)
+![alt text](picture_to_display/0_12.jpg)
 And you should see the following result:
 ```
 {

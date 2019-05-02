@@ -65,7 +65,7 @@ and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss
 Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />
 ![alt text](picture_to_display/NASNET_architecture.png)
 
-To train this model, **_uncomment_** this following and comment other networks:
+To train any model, find your function and put it in `train_model.py` like following:
 ```
 model = build_nasnetlarge(11)
 ```

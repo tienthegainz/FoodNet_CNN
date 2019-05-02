@@ -69,6 +69,11 @@ And then run:
 python3 train_model.py
 ```
 ### Testing
+**_Note:_** The original dataset isn't suit for ImagePreprocessing yet. So you may want to run this:
+```
+python3 move_dat.py
+```
+This will create Food-11-subfolder for you and you can check what its structure like.<br />
 As you can see in [train_model.py](train_model.py):
 
 ```

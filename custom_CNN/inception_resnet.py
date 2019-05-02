@@ -26,8 +26,8 @@ def build_inception_rasnet(n_classes):
     x = Dense(4096)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
-    x = Dropout(.5)(x)
-    predictions = Dense(n_classes, init='glorot_uniform', W_regularizer=l2(.0005), activation='softmax')(x)
+    x = Dropout(.8)(x)
+    predictions = Dense(n_classes, init='glorot_uniform', W_regularizer=l2(.002), activation='softmax')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
 
@@ -35,7 +35,8 @@ def build_inception_rasnet(n_classes):
     for layer in base_model.layers:
         layer.trainable = False
 
-    opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
+    # opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=1e-6)
+    opt = SGD(lr=0.01, momentum=0.1, decay=1e-6, nesterov=True)
     model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy', 'top_k_categorical_accuracy'])
 
     return model

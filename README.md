@@ -14,19 +14,19 @@ If you have been doing Deep Learning for a while, there are high chances that yo
 
 Some library you will need to install
 Firstly, you will go to [Anaconda Download Page](https://www.anaconda.com/download/) to grab the latest version and follow the instruction.
-After that just, it's easy to install other lib:
+After that just, it's easy to install other libraries:
 
 ```
 conda install keras
-conda install sklearn
+conda install -c anaconda scikit-learn
 conda install flask
-conda install icrawler
+conda install -c hellock icrawler
 ```
 
 ## Running this project
 **_Note:_** The original dataset isn't suit for ImagePreprocessing yet. So you may want to run this:
 ```
-python3 move_dat.py
+python3 move_data.py
 ```
 This will create Food-11-subfolder for you and you can check what its structure like.<br />
 ### Making model
@@ -37,7 +37,7 @@ For example:
 def build_vgg16(n_classes):
     # Clear memory for new model
     K.clear_session()
-    # Put the Inception V3 (cut out the classifer part) and our custom classifier on top
+    # Put the VGG16 (cut out the classifer part) and our custom classifier on top
     base_model = VGG16(weights='imagenet', include_top=False, input_tensor=Input(shape=(200, 200, 3)))
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
@@ -49,7 +49,7 @@ def build_vgg16(n_classes):
 
     model = Model(inputs=base_model.input, outputs=predictions)
 
-    # i.e. freeze all convolutional InceptionV3 layers
+    # i.e. freeze all convolutional VGG16 layers
     for layer in base_model.layers:
         layer.trainable = False
 
@@ -62,7 +62,7 @@ def build_vgg16(n_classes):
 You can customize the way you want but if you are beginner, you should go for this setting since I have had changed several times to avoid high bias and high variance.<br />
 My top accuracy is [NASNET](custom_CNN/NASNET.py) with **Top-1: 76.5% and Top-5: 98% and val_loss:0.93**<br />
 and [VGG16](custom_CNN/VGG16.py) with **Top-1: 75.3% and Top-5: 97% and val_loss:0.89**<br />
-Here is what [NASNet Architure](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />
+Here is what [NASNet Cell](https://arxiv.org/pdf/1707.07012.pdf) looks like:<br />
 ![alt text](picture_to_display/NASNET_architecture.png)
 
 To train any model, find your function and put it in `train_model.py` like following:
@@ -73,16 +73,21 @@ And then run:
 ```
 python3 train_model.py
 ```
-### Testing
 As you can see in [train_model.py](train_model.py):
 
 ```
 checkpointer = ModelCheckpoint(filepath='train_data/inception_resnet.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
 ```
-The best results got save under `hdf5` file so you need those libs as well.<br />
-To test, just run [test.py](test.py)<br />
+The best results got save under `hdf5` file type so you need this library as well.<br />
+### Testing
+To test, firstly replace this line:
+```
+model = load_model('train_data/vgg16.17-0.89.hdf5')
+```
+with the model weight you have trained.<br />
 Since I use _Online Augumentation_ for training model,<br />
-**Always check for `eval_gen.reset()` if you don't want class output in weird order**
+**Always check for `eval_gen.reset()` if you don't want class output in weird order**<br />
+Then just run [test.py](test.py):
 ```
 python3 test.py
 ```
@@ -108,7 +113,7 @@ curl -X POST -F image=@Food-11-subfolder/Evaluation/0/0_12.jpg http://127.0.0.1:
 ```
 Here is the image:<br />
 ![alt text](picture_to_display/0_12.jpg)<br />
-And you should see the following result:
+And you should see something similar to this following json:
 ```
 {
   "predictions":[
@@ -147,6 +152,6 @@ And you should see the following result:
 
 ## Authors
 
-* **Hà Việt Tiến** - *Initial work* - [Hà Việt Tiến](https://github.com/tienthegainz)
+* [**Hà Việt Tiến**](https://github.com/tienthegainz)
 
 Make sure to leave a star if you found this helpful.

@@ -39,6 +39,16 @@ if __name__ == '__main__':
         class_mode='categorical',
         subset='validation'
         )
+    try:
+        index_file = open('index_file.txt', 'r')
+    except FileNotFoundError:
+        labels = (train_gen.class_indices)
+        labels = dict((v,k) for k,v in labels.items())
+        print('Making index_file.txt\n')
+        index_file = open('index_file.txt', 'w')
+        for k,v in labels.items():
+            index_file.write('{}.{}\n'.format(k, v))
+        index_file.close()
     STEP_SIZE_TRAIN=(train_gen.n//train_gen.batch_size)+1
     STEP_SIZE_VALID=(val_gen.n//val_gen.batch_size)+1
     """Continue to train"""

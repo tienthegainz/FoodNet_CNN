@@ -75,6 +75,10 @@ def main():
         class_mode='categorical',
         shuffle=False
         )
+    #Get true labels
+    labels = (eval_gen.class_indices)
+    labels = dict((v,k) for k,v in labels.items())
+    y_true = eval_gen.classes
     model = load_model('train_data/vgg16.17-0.89.hdf5')
     STEP_SIZE_EVAL=(eval_gen.n//eval_gen.batch_size)+1
     ##############################################################################
@@ -85,9 +89,6 @@ def main():
                             )
     #### Top 1 and top 5############
     y_pred=np.argmax(predictions,axis=1)
-    labels = (eval_gen.class_indices)
-    labels = dict((v,k) for k,v in labels.items())
-    y_true = eval_gen.classes
 
 
     ####    plot confusion matrix   ########################

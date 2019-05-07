@@ -12,6 +12,7 @@ from operator import itemgetter
 # initialize our Flask application and the Keras model
 app = flask.Flask(__name__)
 model = None
+labels = None
 
 def load_sever_model():
     # load the pre-trained Keras model (here we are using a model
@@ -29,6 +30,27 @@ def prepare_image(image, target):
     # return the processed image
     return np.array(images, dtype=np.float)
 
+def map_index_to_class(idx_path, cls_path):
+    try:
+        idx_file = open(idx_path,'r')
+        cls_file = open(cls_path,'r')
+    except:
+        print('Error reading class and index file')
+        exit()
+    idx = {}
+    cls = {}
+    f1 = idx_file.readlines()
+    f2 = cls_file.readlines()
+    for line in f1:
+        str = line.split('.')
+        idx[str[0].strip(' \n')]=str[1].strip(' \n')
+    for line in f2:
+        str = line.split('.')
+        cls[str[0].strip(' \n')]=str[1].strip(' \n')
+    #print('idx: {}\n'.format(idx))
+    #print('cls: {}\n'.format(cls))
+    global labels
+    labels = dict((int(k), cls.get(v)) for k, v in idx.items())
 @app.route("/predict", methods=["POST"])
 def predict():
     # initialize the data dictionary that will be returned from the
@@ -44,15 +66,13 @@ def predict():
 
             # preprocess the image and prepare it for classification
             image = prepare_image(image, target=(200, 200))
-            # print('\n\n\n', image.shape, '\n\n\n')
             # classify the input image and then initialize the list
             # of predictions to return to the client
-            preds = model.predict(image)
-            # print('\n\n\n', preds.shape, '\n\n\n')
+            pred = model.predict(image)
             data["predictions"] = []
-            #labels = {0: '0', 1: '1', 2: '10', 3: '2', 4: '3', 5: '4', 6: '5', 7: '6', 8: '7', 9: '8', 10: '9'}
-            labels = {0: 'Bread', 1: 'Dairy product', 2: 'Vegetable/Fruit', 3: 'Dessert', 4: 'Egg', 5: 'Fried food', 6: 'Meat', 7: 'Noodles/Pasta', 8: 'Rice', 9: 'Seafood', 10: 'Soup'}
-            results = dict(zip(labels.values(), preds[0]))
+            #labels = {0: 'Bread', 1: 'Dairy product', 2: 'Vegetable/Fruit',
+                    #3: 'Dessert', 4: 'Egg', 5: 'Fried food', 6: 'Meat', 7: 'Noodles/Pasta', 8: 'Rice', 9: 'Seafood', 10: 'Soup'}
+            results = dict(zip(labels.values(), pred[0]))
             results = sorted(results.items(), key=itemgetter(1), reverse=True)
             # loop over the results and add them to the list of
             # returned predictions
@@ -68,6 +88,7 @@ def predict():
 if __name__ == "__main__":
     print(("* Loading Keras model and Flask starting server..."
         "please wait until server has fully started"))
+    map_index_to_class('index_file.txt', 'class_description.txt')
     load_sever_model()
-    model.predict
+    model.predict(prepare_image(Image.open('picture_to_display/0_12.jpg'), target=(200, 200)))
     app.run(debug = False, threaded = False)

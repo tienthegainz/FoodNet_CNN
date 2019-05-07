@@ -20,7 +20,7 @@ if __name__ == '__main__':
                 copyfile(src, dst)
     except Exception as e:
         print(e, '\n')
-    """train_data = os.listdir('Food-11/training/')
+    train_data = os.listdir('Food-11/training/')
     val_data = os.listdir('Food-11/validation/')
     eval_data = os.listdir('Food-11/evaluation/')
     # Move train data
@@ -47,4 +47,4 @@ if __name__ == '__main__':
         if not os.path.isdir(dst):
             os.mkdir(dst)
         dst = dst + '/'
-        shutil.move(src, dst)"""
+        shutil.move(src, dst)
